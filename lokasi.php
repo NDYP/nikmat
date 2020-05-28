@@ -85,9 +85,9 @@ if (strlen($start) > 0 && !is_numeric($start)) {
                                         <div class="row">
 
                                             <!-- Start Google Map -->
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6">
                                                 <!-- Start Map -->
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.9040032128178!2d111.91885351434696!3d-2.1900594984036514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e07d3bdeb21e269%3A0xf2b4e5ca9e063a16!2sSMPN+1+Arut+Utara!5e0!3m2!1sen!2sid!4v1557463341015!5m2!1sen!2sid" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                                <?php echo $data['link_lokasi'] ?>
                                                 <!-- End Map -->
                                             </div>
                                             <!-- End Google Map -->
