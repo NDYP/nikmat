@@ -1,16 +1,17 @@
 <?php
-include ("../config/koneksi.php");
+include("../config/koneksi.php");
 error_reporting(0);
 session_start();
-if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
-  echo "<script> alert ('Silakan login terlebih dahulu'); 
-        window.location = 'login.php'</script>"; 
-    } else{   
+if (empty($_SESSION['username']) and empty($_SESSION['password'])) {
+    echo "<script> alert ('Silakan login terlebih dahulu'); 
+        window.location = 'login.php'</script>";
+} else {
 
-  $sql=mysql_query('SELECT * from tbl_admin where username="'.$_SESSION['username'].'" LIMIT 1');
-  while($rows=mysql_fetch_array($sql)){
-  $username = $rows['username'];
-}}
+    $sql = mysql_query('SELECT * from tbl_admin where username="' . $_SESSION['username'] . '" LIMIT 1');
+    while ($rows = mysql_fetch_array($sql)) {
+        $username = $rows['username'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,10 +49,10 @@ if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
 
         </nav>
 
-<?php
-$query = mysql_query("SELECT * FROM tbl_galeri WHERE id_menu='$_GET[id]'");
-$isi = mysql_fetch_array($query);
-?>
+        <?php
+        $query = mysql_query("SELECT * FROM tbl_galeri WHERE id_menu='$_GET[id]'");
+        $isi = mysql_fetch_array($query);
+        ?>
 
         <div id="page-wrapper">
             <div class="row">
@@ -72,27 +73,30 @@ $isi = mysql_fetch_array($query);
                             <div class="row">
                                 <div class="col-lg-10">
 
-                                    <form enctype = 'multipart/form-data' role="form" action="proses_edit_galeri.php" method="POST">
-                                        <input type="hidden" name="id_menu" value="<?php echo $isi['id_menu']; ?>"/>
+                                    <form enctype='multipart/form-data' role="form" action="proses_edit_galeri.php" method="POST">
+                                        <input type="hidden" name="id_menu" value="<?php echo $isi['id_menu']; ?>" />
 
-                                       
+
 
                                         <div class="form-group">
                                             <label>Nama Menu</label>
                                             <input type="text" name="nama_menu" class="form-control" placeholder="Isi Galeri Judul" required="required" value="<?php echo $isi['nama_menu'] ?>">
                                         </div>
-
-                                         <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Harga</label>
+                                            <input type="text" name="harga" class="form-control" placeholder="Isi Harga" required="required" value="<?php echo $isi['harga'] ?>">
+                                        </div>
+                                        <div class="form-group">
                                             <label>Tanggal</label>
                                             <input type="date" name="tanggal" class="form-control" placeholder="Isi Tanggal" required="required" value="<?php echo $isi['tanggal'] ?>">
                                         </div>
 
-                                        <div class = "form-group">
+                                        <div class="form-group">
                                             <label>Foto</label>
                                             <input type="file" name="foto_menu">
                                         </div>
 
-                                
+
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                         <button type="reset" class="btn btn-danger" onclick="var x = window.location =' kelola_galeri.php'">Batal</button>
                                     </form>
@@ -129,9 +133,9 @@ $isi = mysql_fetch_array($query);
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
+        $(document).ready(function() {
+            $('#dataTables-example').dataTable();
+        });
     </script>
 
     <script src="ckeditor/ckeditor.js"></script>

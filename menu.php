@@ -1,6 +1,17 @@
 <?php include('config/koneksi.php');
 error_reporting(0);
-
+$dataperpage =  mysql_query("SELECT tbl_album.*, tbl_galeri.* FROM tbl_album LEFT JOIN tbl_galeri ON tbl_album.`id_album` = tbl_galeri.`id_album` GROUP by tbl_album.`id_album`");
+$numpage = mysql_num_rows($dataperpage);
+$start = $_GET['start'];
+$eu = $start - 0;
+$limit = 3;
+$thisp = $eu + $limit;
+$back = $eu - $limit;
+$next = $eu + $limit;
+if (strlen($start) > 0 && !is_numeric($start)) {
+    echo 'Data Error';
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,43 +46,75 @@ error_reporting(0);
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="shortcut icon" href="tutwuri.png">
 </head>
-<!--/head-->
 
-        <body background="img/BG.jpg">  
-
+<body background="img/BG.jpg">
 
     <?php include "header.php" ?>
-
+    <!-- start banner Area -->
     <section class="banner-area relative about-banner" id="home">
         <div class="overlay overlay-bg"></div>
         <div class="container">
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="about-content col-lg-12">
                     <h1 class="text-white">
-                        Struktur Sekolah
+                        Album
                     </h1>
-                    <p class="text-white link-nav"><a href="index.php">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="struktur_sekolah.php"> Struktur Sekolah</a></p>
+                    <p class="text-white link-nav"><a href="index.php">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="album.php"> Album </a></p>
                 </div>
             </div>
         </div>
     </section>
     <!-- End banner Area -->
 
-    <!-- Start feature Area -->
-    <section class="info-area pb-120">
-        <div class="container-fluid">
-            <div class="title text-center">
+    <section class="gallery-area section-gap">
+        <div class="container">
+            <div class="row">
+
                 <?php
-                $sql = mysql_query("SELECT * FROM tbl_struktur_sekolah");
-                $isi = mysql_fetch_array($sql);
-                $foto = $isi['gambar_struktur'];
+                $sql = mysql_query("SELECT from tbl_galeri limit $eu, $limit");
+                while ($data = mysql_fetch_array($sql)) {
                 ?>
-                <img src="admin/image/struktur_sekolah/<?php echo $isi['gambar_struktur']; ?>" alt="">
+
+                    <div class="col-lg-4">
+
+                        <center><a href="admin/image/galeri/<?php echo $data['foto_menu'] ?>"><img class="img-fluid" src="admin/image/galeri/<?php echo $data['foto_menu']; ?>" style="width: 250px; height: 250px;" alt="img"></a></center>
+
+                        <center>
+                            <h2 class="blog_title"><a href="admin/image/galeri/<?php echo $data['foto_menu'] ?>" style="font-size: 15px;">
+                                    <?php echo $data['nama_menu'] ?></a></h2>
+                        </center>
+                    </div>
+                    <br>
+                <?php } ?>
             </div>
         </div>
+        <?php if ($numpage > $limit) { ?>
+
+            <ul class="blog-pagination justify-content-center d-flex">
+            <?php
+            if ($back >= 0) {
+                echo "<li><h2><a href=$page?start=$back>&nbsp;PREV&nbsp;</a></h2></li>";
+            }
+            $l = 1;
+            for ($i = 0; $i < $numpage; $i = $i + $limit) {
+                if ($i <> $eu) {
+                    echo "<li><h2><a href=$page?start=$i>&nbsp;$l&nbsp;</a></h2></li>";
+                } else {
+                    echo "<li class='page-link'><a>&nbsp;$l&nbsp;</a></li>";
+                }
+                $l = $l + 1;
+            }
+            if ($thisp < $numpage) {
+                echo "<li><h2><a href=$page?start=$next> NEXT </a></h2></li>";
+            }
+            echo "</ul>";
+        }
+            ?>
+
     </section>
-    <!-- End info Area -->
+    <!--/#portfolio-item-->
 
     <?php include "footer.php" ?>
 

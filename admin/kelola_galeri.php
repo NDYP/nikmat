@@ -1,16 +1,17 @@
 <?php
-include ("../config/koneksi.php");
+include("../config/koneksi.php");
 error_reporting(0);
 session_start();
-if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
-  echo "<script> alert ('Silakan login terlebih dahulu'); 
-        window.location = 'login.php'</script>"; 
-    } else{   
+if (empty($_SESSION['username']) and empty($_SESSION['password'])) {
+    echo "<script> alert ('Silakan login terlebih dahulu'); 
+        window.location = 'login.php'</script>";
+} else {
 
-  $sql=mysql_query('SELECT * from tbl_admin where username="'.$_SESSION['username'].'" LIMIT 1');
-  while($rows=mysql_fetch_array($sql)){
-  $username = $rows['username'];
-}}
+    $sql = mysql_query('SELECT * from tbl_admin where username="' . $_SESSION['username'] . '" LIMIT 1');
+    while ($rows = mysql_fetch_array($sql)) {
+        $username = $rows['username'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,24 +68,27 @@ if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
                             <div class="row">
                                 <div class="col-lg-10">
 
-                                    <form enctype = 'multipart/form-data' role="form" action="proses_tambah_galeri.php" method="POST">
+                                    <form enctype='multipart/form-data' role="form" action="proses_tambah_galeri.php" method="POST">
 
-                                       
+
 
                                         <div class="form-group">
                                             <label>Nama Menu</label>
                                             <input type="text" name="nama_menu" class="form-control" placeholder="Isi Nama Menu" required="required">
                                         </div>
-
+                                        <div class="form-group">
+                                            <label>Harga</label>
+                                            <input type="text" name="harga" class="form-control" placeholder="Isi Harga" required="required">
+                                        </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>
                                             <input type="date" name="tanggal" class="form-control" placeholder="Isi Tanggal" required="required">
                                         </div>
 
-                                        <div class = "form-group">
+                                        <div class="form-group">
                                             <label>Foto</label>
                                             <input type="file" accept="image/*" name="foto_menu">
-                                        </div>                             
+                                        </div>
 
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                         <button type="reset" class="btn btn-danger">Batal</button>
@@ -116,8 +120,9 @@ if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                           
+
                                             <th>Nama Menu</th>
+                                            <th>Harga</th>
                                             <th>Tanggal</th>
                                             <th>Foto</th>
                                             <th>Aksi</th>
@@ -125,28 +130,32 @@ if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
                                     </thead>
                                     <tbody>
 
-                                    <?php
-                                    $i=1;
-                                    $query = mysql_query("SELECT * FROM tbl_galeri ");
-                                    while ($isi = mysql_fetch_array($query)) {
-                                    ?>
+                                        <?php
+                                        $i = 1;
+                                        $query = mysql_query("SELECT * FROM tbl_galeri ");
+                                        while ($isi = mysql_fetch_array($query)) {
+                                        ?>
 
-                                    <tr>
-                                        <td><?php echo $i; ?></td>
-                                       
-                                        <td><?php echo $isi['nama_menu']; ?></td>
-                                        <td><?php echo $isi['tanggal']; ?></td>
-                                        <td><image src="image/galeri/<?php echo $isi['foto_menu']; ?>" style="width: 100px;height: 100px;"></td>
-                                        
-                                    <td>
-                                    <a class="btn btn-primary btn-sm show-tooltip" title="Edit" href="edit_galeri.php?id=<?php echo $isi['id_menu'];?>"><i class="fa fa-edit"></i></a>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
 
-                                    <a class="btn btn-danger btn-sm show-tooltip" title="Hapus" href="delete_galeri.php?id=<?php echo $isi['id_menu'];?>" onclick="return confirm('Yakin akan dihapus ?');"><i class="fa fa-trash-o"></i></a>    
-                                    </td>
-                                        
-                                    </tr>
-                                    
-                                    <?php $i++; }; ?>
+                                                <td><?php echo $isi['nama_menu']; ?></td>
+                                                <td><?php echo $isi['harga']; ?></td>
+                                                <td><?php echo $isi['tanggal']; ?></td>
+                                                <td>
+                                                    <image src="image/galeri/<?php echo $isi['foto_menu']; ?>" style="width: 100px;height: 100px;">
+                                                </td>
+
+                                                <td>
+                                                    <a class="btn btn-primary btn-sm show-tooltip" title="Edit" href="edit_galeri.php?id=<?php echo $isi['id_menu']; ?>"><i class="fa fa-edit"></i></a>
+
+                                                    <a class="btn btn-danger btn-sm show-tooltip" title="Hapus" href="delete_galeri.php?id=<?php echo $isi['id_menu']; ?>" onclick="return confirm('Yakin akan dihapus ?');"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+
+                                            </tr>
+
+                                        <?php $i++;
+                                        }; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -181,9 +190,9 @@ if (empty($_SESSION['username']) AND empty($_SESSION['password'])){
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
+        $(document).ready(function() {
+            $('#dataTables-example').dataTable();
+        });
     </script>
 
     <script src="ckeditor/ckeditor.js"></script>
